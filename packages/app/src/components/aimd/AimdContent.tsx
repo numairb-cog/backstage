@@ -17,42 +17,14 @@
 import React, { useEffect, useState } from 'react';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { AimdEntityV1alpha1 } from '@backstage/catalog-model';
-import { InfoCard, Progress } from '@backstage/core-components';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  InfoCard,
+  Progress,
+  MarkdownContent,
+} from '@backstage/core-components';
 import Alert from '@material-ui/lab/Alert';
 
-const useStyles = makeStyles(theme => ({
-  markdown: {
-    '& pre': {
-      backgroundColor: theme.palette.type === 'dark' ? '#1e1e1e' : '#f5f5f5',
-      padding: theme.spacing(2),
-      borderRadius: theme.shape.borderRadius,
-      overflow: 'auto',
-    },
-    '& code': {
-      fontFamily: 'monospace',
-      fontSize: '0.9em',
-    },
-    '& table': {
-      borderCollapse: 'collapse',
-      width: '100%',
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
-    '& th, & td': {
-      border: `1px solid ${theme.palette.divider}`,
-      padding: theme.spacing(1),
-      textAlign: 'left',
-    },
-    '& th': {
-      backgroundColor: theme.palette.type === 'dark' ? '#2d2d2d' : '#e0e0e0',
-      fontWeight: 'bold',
-    },
-  },
-}));
-
 export const AimdContent = () => {
-  const classes = useStyles();
   const { entity } = useEntity<AimdEntityV1alpha1>();
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
@@ -104,11 +76,7 @@ export const AimdContent = () => {
 
   return (
     <InfoCard title="Markdown Documentation">
-      <div className={classes.markdown}>
-        <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
-          {content}
-        </pre>
-      </div>
+      <MarkdownContent content={content} />
     </InfoCard>
   );
 };

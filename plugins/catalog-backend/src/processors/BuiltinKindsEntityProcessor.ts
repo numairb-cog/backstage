@@ -15,6 +15,8 @@
  */
 
 import {
+  AimdEntityV1alpha1,
+  aimdEntityV1alpha1Validator,
   ApiEntity,
   apiEntityV1alpha1Validator,
   ComponentEntity,
@@ -59,6 +61,7 @@ import { get, set } from 'lodash';
 /** @public */
 export class BuiltinKindsEntityProcessor implements CatalogProcessor {
   private readonly validators = [
+    aimdEntityV1alpha1Validator,
     apiEntityV1alpha1Validator,
     componentEntityV1alpha1Validator,
     resourceEntityV1alpha1Validator,
@@ -199,6 +202,26 @@ export class BuiltinKindsEntityProcessor implements CatalogProcessor {
       );
       doEmit(
         component.spec.system,
+        { defaultKind: 'System', defaultNamespace: selfRef.namespace },
+        RELATION_PART_OF,
+        RELATION_HAS_PART,
+      );
+    }
+
+    /*
+     * Emit relations for the AIMD kind
+     */
+
+    if (entity.kind === 'AIMD') {
+      const aimd = entity as AimdEntityV1alpha1;
+      doEmit(
+        aimd.spec.owner,
+        { defaultKind: 'Group', defaultNamespace: selfRef.namespace },
+        RELATION_OWNED_BY,
+        RELATION_OWNER_OF,
+      );
+      doEmit(
+        aimd.spec.system,
         { defaultKind: 'System', defaultNamespace: selfRef.namespace },
         RELATION_PART_OF,
         RELATION_HAS_PART,

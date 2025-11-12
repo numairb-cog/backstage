@@ -150,6 +150,7 @@ catalog:
         - System
         - Domain
         - Location
+        - AIMD
   providers:
     azureBlob:
       accountName: ${ACCOUNT_NAME}
@@ -199,6 +200,11 @@ catalog:
       target: ../../plugins/scaffolder-backend/sample-templates/all-templates.yaml
       rules:
         - allow: [Template]
+    # Example AIMD entities
+    - type: file
+      target: /home/ubuntu/example-aimd-docs/catalog-info.yaml
+      rules:
+        - allow: [AIMD]
 
 scaffolder:
   auditor:

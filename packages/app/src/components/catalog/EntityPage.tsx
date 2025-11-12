@@ -80,6 +80,7 @@ import {
   LightBox,
 } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { EntityTechdocsContent } from '@backstage/plugin-techdocs';
+import { AimdContent } from '../aimd/AimdContent';
 
 const customEntityFilterKind = ['Component', 'API', 'System'];
 
@@ -457,6 +458,22 @@ const resourcePage = (
   </EntityLayoutWrapper>
 );
 
+const aimdPage = (
+  <EntityLayoutWrapper>
+    <EntityLayout.Route path="/" title="Overview">
+      {overviewContent}
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/docs" title="Docs">
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <AimdContent />
+        </Grid>
+      </Grid>
+    </EntityLayout.Route>
+  </EntityLayoutWrapper>
+);
+
 export const entityPage = (
   <EntitySwitch>
     <EntitySwitch.Case if={isKind('component')} children={componentPage} />
@@ -466,6 +483,7 @@ export const entityPage = (
     <EntitySwitch.Case if={isKind('system')} children={systemPage} />
     <EntitySwitch.Case if={isKind('domain')} children={domainPage} />
     <EntitySwitch.Case if={isKind('resource')} children={resourcePage} />
+    <EntitySwitch.Case if={isKind('aimd')} children={aimdPage} />
 
     <EntitySwitch.Case>{defaultEntityPage}</EntitySwitch.Case>
   </EntitySwitch>

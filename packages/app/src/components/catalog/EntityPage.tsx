@@ -457,6 +457,35 @@ const resourcePage = (
   </EntityLayoutWrapper>
 );
 
+const aimdPage = (
+  <EntityLayoutWrapper>
+    <EntityLayout.Route path="/" title="Overview">
+      {overviewContent}
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/docs" title="Docs">
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <EmptyState
+            title="AIMD Markdown Content"
+            missing="info"
+            description="The AIMD plugin for displaying markdown content is currently being developed. The markdown file reference is stored in the spec.definition field of the AIMD entity."
+            action={
+              <Button
+                variant="contained"
+                color="primary"
+                href="https://backstage.io/docs/features/software-catalog/"
+              >
+                Read more
+              </Button>
+            }
+          />
+        </Grid>
+      </Grid>
+    </EntityLayout.Route>
+  </EntityLayoutWrapper>
+);
+
 export const entityPage = (
   <EntitySwitch>
     <EntitySwitch.Case if={isKind('component')} children={componentPage} />
@@ -466,6 +495,7 @@ export const entityPage = (
     <EntitySwitch.Case if={isKind('system')} children={systemPage} />
     <EntitySwitch.Case if={isKind('domain')} children={domainPage} />
     <EntitySwitch.Case if={isKind('resource')} children={resourcePage} />
+    <EntitySwitch.Case if={isKind('aimd')} children={aimdPage} />
 
     <EntitySwitch.Case>{defaultEntityPage}</EntitySwitch.Case>
   </EntitySwitch>

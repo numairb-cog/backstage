@@ -80,6 +80,7 @@ import {
   LightBox,
 } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { EntityTechdocsContent } from '@backstage/plugin-techdocs';
+import { AimdContent } from '../aimd/AimdContent';
 
 const customEntityFilterKind = ['Component', 'API', 'System'];
 
@@ -466,20 +467,7 @@ const aimdPage = (
     <EntityLayout.Route path="/docs" title="Docs">
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <EmptyState
-            title="AIMD Markdown Content"
-            missing="info"
-            description="The AIMD plugin for displaying markdown content is currently being developed. The markdown file reference is stored in the spec.definition field of the AIMD entity."
-            action={
-              <Button
-                variant="contained"
-                color="primary"
-                href="https://backstage.io/docs/features/software-catalog/"
-              >
-                Read more
-              </Button>
-            }
-          />
+          <AimdContent />
         </Grid>
       </Grid>
     </EntityLayout.Route>

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+export { aimdEntityV1alpha1Validator } from './AimdEntityV1alpha1';
+export type {
+  AimdEntityV1alpha1 as AimdEntity,
+  AimdEntityV1alpha1,
+} from './AimdEntityV1alpha1';
 export { apiEntityV1alpha1Validator } from './ApiEntityV1alpha1';
 export type {
   ApiEntityV1alpha1 as ApiEntity,

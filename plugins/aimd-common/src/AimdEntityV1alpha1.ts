@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-import type { Entity } from '@backstage/catalog-model';
+import {
+  Entity,
+  entityKindSchemaValidator,
+  KindValidator,
+} from '@backstage/catalog-model';
 import schema from './schema/Aimd.v1alpha1.schema.json';
-import { ajvCompiledJsonSchemaValidator } from '@backstage/catalog-model';
 
 /**
  * Backstage AIMD kind Entity. AIMDs describe markdown documentation that can be displayed in the catalog.
@@ -39,10 +42,15 @@ export interface AimdEntityV1alpha1 extends Entity {
   };
 }
 
+const validator = entityKindSchemaValidator(schema);
+
 /**
- * {@link KindValidator} for {@link AimdEntityV1alpha1}.
+ * Entity data validator for {@link AimdEntityV1alpha1}.
  *
  * @public
  */
-export const aimdEntityV1alpha1Validator =
-  ajvCompiledJsonSchemaValidator(schema);
+export const aimdEntityV1alpha1Validator: KindValidator = {
+  async check(data: Entity) {
+    return validator(data) === data;
+  },
+};

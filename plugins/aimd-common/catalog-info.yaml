@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: internal-plugin-aimd-common
+  title: '@internal/plugin-aimd-common'
+  description: Common functionalities for the AIMD plugin, defining the AIMD entity kind
+spec:
+  lifecycle: experimental
+  type: backstage-common-library
+  owner: maintainers

@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: internal-plugin-aimd-docs
+  title: '@internal/plugin-aimd-docs'
+  description: A Backstage plugin that helps represent AIMD entities in the frontend
+spec:
+  lifecycle: experimental
+  type: backstage-frontend-plugin
+  owner: maintainers

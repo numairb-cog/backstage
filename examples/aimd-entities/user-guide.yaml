@@ -1,0 +1,17 @@
+apiVersion: yourcompany.io/v1alpha1
+kind: Aimd
+metadata:
+  name: user-guide
+  description: User guide documentation for the platform
+  labels:
+    category: documentation
+    audience: end-users
+  annotations:
+    backstage.io/view-url: https://github.com/example/docs/blob/main/user-guide.md
+spec:
+  type: markdown
+  lifecycle: production
+  owner: documentation-team
+  system: docs-portal
+  definition:
+    $text: ./user-guide.md

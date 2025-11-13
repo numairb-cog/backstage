@@ -1,0 +1,108 @@
+apiVersion: yourcompany.io/v1alpha1
+kind: Aimd
+metadata:
+  name: api-guidelines
+  description: API design and development guidelines
+  labels:
+    category: guidelines
+    audience: developers
+  annotations:
+    backstage.io/view-url: https://github.com/example/docs/blob/main/api-guidelines.md
+spec:
+  type: markdown
+  lifecycle: production
+  owner: platform-team
+  system: engineering-standards
+  definition: |
+
+    This document outlines the standards and best practices for designing and implementing APIs in our organization.
+
+
+
+    Use the appropriate HTTP method for each operation:
+
+    - **GET**: Retrieve resources
+    - **POST**: Create new resources
+    - **PUT**: Update entire resources
+    - **PATCH**: Partially update resources
+    - **DELETE**: Remove resources
+
+
+    Return appropriate HTTP status codes:
+
+    - `200 OK`: Successful GET, PUT, PATCH
+    - `201 Created`: Successful POST
+    - `204 No Content`: Successful DELETE
+    - `400 Bad Request`: Invalid request
+    - `401 Unauthorized`: Authentication required
+    - `403 Forbidden`: Insufficient permissions
+    - `404 Not Found`: Resource not found
+    - `500 Internal Server Error`: Server error
+
+
+
+    - Use plural nouns for collections: `/users`, `/products`
+    - Use kebab-case for multi-word resources: `/user-profiles`
+    - Avoid verbs in endpoint names
+
+
+    ```json
+    {
+      "data": {
+        "id": "123",
+        "type": "user",
+        "attributes": {
+          "firstName": "John",
+          "lastName": "Doe"
+        }
+      }
+    }
+    ```
+
+
+    Include API version in the URL:
+
+    ```
+    /api/v1/users
+    /api/v2/users
+    ```
+
+
+    Use OAuth 2.0 or JWT tokens for authentication:
+
+    ```
+    Authorization: Bearer <token>
+    ```
+
+
+    Return consistent error responses:
+
+    ```json
+    {
+      "error": {
+        "code": "VALIDATION_ERROR",
+        "message": "Invalid email format",
+        "details": [
+          {
+            "field": "email",
+            "issue": "Must be a valid email address"
+          }
+        ]
+      }
+    }
+    ```
+
+
+    - Document all endpoints using OpenAPI/Swagger
+    - Include request/response examples
+    - Specify required and optional parameters
+    - Document error responses
+
+
+    Implement rate limiting to prevent abuse:
+
+    ```
+    X-RateLimit-Limit: 1000
+    X-RateLimit-Remaining: 999
+    X-RateLimit-Reset: 1640995200
+    ```

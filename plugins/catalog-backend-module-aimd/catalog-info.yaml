@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: internal-plugin-catalog-backend-module-aimd
+  title: '@internal/plugin-catalog-backend-module-aimd'
+  description: >-
+    Adds support for the AIMD specific entity model (e.g. the Aimd kind) to the
+    catalog backend plugin.
+spec:
+  lifecycle: experimental
+  type: backstage-backend-plugin-module
+  owner: maintainers

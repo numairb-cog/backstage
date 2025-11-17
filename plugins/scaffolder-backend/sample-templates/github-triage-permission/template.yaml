@@ -1,0 +1,96 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: github-triage-permission-template
+  title: Create GitHub Repository with Triage Permission
+  description: A template to create a new GitHub repository and grant triage permission to specified users or teams
+spec:
+  owner: backstage/techdocs-core
+  type: service
+
+  parameters:
+    - title: Repository Information
+      required:
+        - repoUrl
+        - name
+        - description
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+          description: Choose a location for the new repository
+        
+        name:
+          title: Repository Name
+          type: string
+          description: Unique name of the repository
+          ui:autofocus: true
+        
+        description:
+          title: Repository Description
+          type: string
+          description: A short description of the repository
+    
+    - title: Users with Triage Permission
+      properties:
+        triageUser1:
+          title: First GitHub Username (optional)
+          type: string
+          description: GitHub username to grant triage permission
+        
+        triageUser2:
+          title: Second GitHub Username (optional)
+          type: string
+          description: GitHub username to grant triage permission
+        
+        triageUser3:
+          title: Third GitHub Username (optional)
+          type: string
+          description: GitHub username to grant triage permission
+
+  steps:
+    - id: fetch-base
+      name: Fetch Base
+      action: fetch:template
+      input:
+        url: ./content
+        values:
+          name: ${{ parameters.name }}
+          description: ${{ parameters.description }}
+
+    - id: create-repo
+      name: Create Repository with Triage Permissions
+      action: github:repo:create
+      input:
+        repoUrl: ${{ parameters.repoUrl }}
+        description: ${{ parameters.description }}
+        repoVisibility: private
+        collaborators:
+          - user: ${{ parameters.triageUser1 }}
+            access: triage
+          - user: ${{ parameters.triageUser2 }}
+            access: triage
+          - user: ${{ parameters.triageUser3 }}
+            access: triage
+        autoInit: true
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['create-repo'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['create-repo'].output.remoteUrl }}
+      - title: Repository Settings
+        url: ${{ steps['create-repo'].output.remoteUrl | replace('.git', '') }}/settings/access
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}
